@@ -52,6 +52,14 @@
               "target": "Package",
               "version": "[0.102.2, )"
             },
+            "DocX": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.3, )"

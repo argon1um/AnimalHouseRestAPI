@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AHRestAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18422cb03e322261f1e604adef0161b9f9878ef4")]
 [assembly: System.Reflection.AssemblyProductAttribute("AHRestAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AHRestAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

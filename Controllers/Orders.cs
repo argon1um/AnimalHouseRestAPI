@@ -5,13 +5,16 @@ using AnimalHouseRestAPI.DataBase;
 using AnimalHouseRestAPI.Models;
 using AnimalHouseRestAPI.ModelsDTO;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Packaging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using Xceed.Words.NET;
 
 namespace AHRestAPI.Controllers
 {
@@ -80,7 +83,7 @@ namespace AHRestAPI.Controllers
         public ActionResult<List<OrderGetDTO>> GetPayedOrders()
         {
             List<OrderGetDTO> getDTO = new List<OrderGetDTO>();
-            List<Order> orders = DataBaseConnection.Context.Orders.ToList().Where(x=>x.OrderStatusid == 2).ToList();
+            List<Order> orders = DataBaseConnection.Context.Orders.ToList().Where(x => x.OrderStatusid == 2).ToList();
             if (orders != null)
             {
                 getDTO = OrdergetMapper.ConvertToGet(orders);
@@ -346,6 +349,41 @@ namespace AHRestAPI.Controllers
             workbook.SaveAs(stream);
             stream.Position = 0;
             return new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            
+        }
+        [HttpGet("/orders/GenerateAgreement")]
+        public IActionResult GenerateAgreement([FromQuery] int id)
+        {
+            var order = DataBaseConnection.Context.Orders.FirstOrDefault(x => x.OrderId == id);
+            var client = DataBaseConnection.Context.Clients.FirstOrDefault(x => x.ClientPhone == order.ClientPhone);
+
+            if (order == null || client == null)
+            {
+                return NotFound("Заказ или клиент не найдены.");
+            }
+
+            string filepath = "assets/agreement.docx";
+            if (!System.IO.File.Exists(filepath))
+            {
+                return NotFound("Файл не найден.");
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                using (var doc = DocX.Load(filepath))
+                {
+                    // Заменяем метки на фактические данные
+                    doc.ReplaceText("CLIENTNAME", client.ClientName);
+                    doc.ReplaceText("ORDERID", order.OrderId.ToString());
+                    doc.ReplaceText("ANIMALNAME", order.Animal.AnimalName);
+                    doc.SaveAs(stream);
+                }
+
+                stream.Position = 0;
+                order.OrderStatusid = 2;
+                DataBaseConnection.Context.SaveChanges();
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "agreement.docx");
+            }
         }
     }
 }
