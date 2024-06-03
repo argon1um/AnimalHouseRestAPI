@@ -9,9 +9,9 @@
       "AHRestAPI/1.0.0": {
         "dependencies": {
           "AutoMapper": "12.0.1",
-          "ClosedXML": "0.102.2",
+          "ClosedXML": "0.102.1",
           "DocX": "3.0.0",
-          "DocumentFormat.OpenXml": "3.0.2",
+          "DocumentFormat.OpenXml": "2.20.0",
           "Microsoft.AspNetCore.OpenApi": "7.0.3",
           "Microsoft.EntityFrameworkCore.Proxies": "7.0.11",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.11",
@@ -46,49 +46,38 @@
           }
         }
       },
-      "ClosedXML/0.102.2": {
+      "ClosedXML/0.102.1": {
         "dependencies": {
-          "DocumentFormat.OpenXml": "3.0.2",
+          "DocumentFormat.OpenXml": "2.20.0",
           "ExcelNumberFormat": "1.1.0",
           "SixLabors.Fonts": "1.0.0",
-          "System.IO.Packaging": "8.0.0",
+          "System.IO.Packaging": "6.0.0",
           "System.Net.Http": "4.3.4",
           "System.Text.RegularExpressions": "4.3.1",
           "XLParser": "1.5.2"
         },
         "runtime": {
           "lib/netstandard2.1/ClosedXML.dll": {
-            "assemblyVersion": "0.102.2.0",
-            "fileVersion": "0.102.2.0"
+            "assemblyVersion": "0.102.1.0",
+            "fileVersion": "0.102.1.0"
           }
         }
       },
-      "DocumentFormat.OpenXml/3.0.2": {
+      "DocumentFormat.OpenXml/2.20.0": {
         "dependencies": {
-          "DocumentFormat.OpenXml.Framework": "3.0.2"
+          "System.IO.Packaging": "6.0.0"
         },
         "runtime": {
-          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
-            "assemblyVersion": "3.0.2.0",
-            "fileVersion": "3.0.2.0"
-          }
-        }
-      },
-      "DocumentFormat.OpenXml.Framework/3.0.2": {
-        "dependencies": {
-          "System.IO.Packaging": "8.0.0"
-        },
-        "runtime": {
-          "lib/net6.0/DocumentFormat.OpenXml.Framework.dll": {
-            "assemblyVersion": "3.0.2.0",
-            "fileVersion": "3.0.2.0"
+          "lib/net6.0/DocumentFormat.OpenXml.dll": {
+            "assemblyVersion": "2.20.0.0",
+            "fileVersion": "2.20.0.0"
           }
         }
       },
       "DocX/3.0.0": {
         "dependencies": {
           "System.Drawing.Common": "5.0.2",
-          "System.IO.Packaging": "8.0.0"
+          "System.IO.Packaging": "6.0.0"
         },
         "runtime": {
           "lib/net5.0/Xceed.Document.NET5.dll": {
@@ -675,11 +664,11 @@
           "System.Runtime": "4.3.1"
         }
       },
-      "System.IO.Packaging/8.0.0": {
+      "System.IO.Packaging/6.0.0": {
         "runtime": {
-          "lib/net7.0/System.IO.Packaging.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.23.53103"
+          "lib/net6.0/System.IO.Packaging.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
           }
         }
       },
@@ -1127,26 +1116,19 @@
       "path": "castle.core/5.1.0",
       "hashPath": "castle.core.5.1.0.nupkg.sha512"
     },
-    "ClosedXML/0.102.2": {
+    "ClosedXML/0.102.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nsHmfPNPtWpr6vair857sQiN11OaFn80oiN2GIbTB1vDqnw9jhNMtlxS0/iYP/E+YGG5zLX2N6xeznuBuvezSQ==",
-      "path": "closedxml/0.102.2",
-      "hashPath": "closedxml.0.102.2.nupkg.sha512"
+      "sha512": "sha512-Zb0/SgczPKLqlCHpSZzMG2qzaT3HpdkFrYJU8TTFRMfC0NLTSlp8gw26tZAtJp+Do0szAhPrWjkTp9flH9Or0A==",
+      "path": "closedxml/0.102.1",
+      "hashPath": "closedxml.0.102.1.nupkg.sha512"
     },
-    "DocumentFormat.OpenXml/3.0.2": {
+    "DocumentFormat.OpenXml/2.20.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gqjP/BxKWgwAWwPAN+RpKaMOiidPM07F+mAxiiW184/MnkHnkk12Qo7cRB0wuq4kOZUrUzQ9EUO966hUy/wKBw==",
-      "path": "documentformat.openxml/3.0.2",
-      "hashPath": "documentformat.openxml.3.0.2.nupkg.sha512"
-    },
-    "DocumentFormat.OpenXml.Framework/3.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ILRCJu2dUJDv27ZCQDftD7AZSuBgKg+ZSUF9dg2dk8qcIED7oM42y/cvZIm0mev80nj2QMzpxthX87+AebzHug==",
-      "path": "documentformat.openxml.framework/3.0.2",
-      "hashPath": "documentformat.openxml.framework.3.0.2.nupkg.sha512"
+      "sha512": "sha512-+oFMsEppo/W6KpGTRXaJl2jTFYn9zeon4FaZuDoCijQ1/0JaPENaCef7d4Y3f8v116eKhVBwd4Ya+/NDglxkjw==",
+      "path": "documentformat.openxml/2.20.0",
+      "hashPath": "documentformat.openxml.2.20.0.nupkg.sha512"
     },
     "DocX/3.0.0": {
       "type": "package",
@@ -1680,12 +1662,12 @@
       "path": "system.io.filesystem.primitives/4.3.0",
       "hashPath": "system.io.filesystem.primitives.4.3.0.nupkg.sha512"
     },
-    "System.IO.Packaging/8.0.0": {
+    "System.IO.Packaging/6.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-8g1V4YRpdGAxFcK8v9OjuMdIOJSpF30Zb1JGicwVZhly3I994WFyBdV6mQEo8d3T+URQe55/M0U0eIH0Hts1bg==",
-      "path": "system.io.packaging/8.0.0",
-      "hashPath": "system.io.packaging.8.0.0.nupkg.sha512"
+      "sha512": "sha512-C7OkTRIjqIjAKu6ef/fuj8ynCZTPcTYZnvHaq48bniACgXXJogmEoIc56YCDNTc14xhsbLmgpS3KP+evbsUa2g==",
+      "path": "system.io.packaging/6.0.0",
+      "hashPath": "system.io.packaging.6.0.0.nupkg.sha512"
     },
     "System.Linq/4.3.0": {
       "type": "package",

@@ -50,7 +50,7 @@
             },
             "ClosedXML": {
               "target": "Package",
-              "version": "[0.102.2, )"
+              "version": "[0.102.1, )"
             },
             "DocX": {
               "target": "Package",
@@ -58,7 +58,7 @@
             },
             "DocumentFormat.OpenXml": {
               "target": "Package",
-              "version": "[3.0.2, )"
+              "version": "[2.20.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

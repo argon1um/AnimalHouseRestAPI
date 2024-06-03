@@ -130,22 +130,6 @@ namespace AHRestAPI.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("/orders/orderdelete")]
-        public ActionResult<Order> OrderDeleteOnId(int orderid)
-        {
-            List<Order> order = DataBaseConnection.Context.Orders.ToList().Where(x => x.OrderId == orderid).ToList();
-            if (order.Count != 0)
-            {
-                DataBaseConnection.Context.Orders.RemoveRange(order);
-                DataBaseConnection.Context.SaveChanges();
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
 
         [HttpPost]
         [Route("/orders/addneworder")]
@@ -290,65 +274,68 @@ namespace AHRestAPI.Controllers
                 return NotFound("Файл не найден.");
             }
 
-            using var workbook = new XLWorkbook(filepath);
-            foreach (var worksheet in workbook.Worksheets)
+            using (var workbook = new XLWorkbook(filepath))
             {
-                foreach (var cell in worksheet.CellsUsed())
+                foreach (var worksheet in workbook.Worksheets)
                 {
-                    if (cell.Value.ToString().Contains("CLIENTNAME"))
+                    foreach (var cell in worksheet.CellsUsed())
                     {
-                        cell.Value = cell.Value.ToString().Replace("CLIENTNAME", client.ClientName);
-                    }
-                    else if (cell.Value.ToString().Contains("ORDERID"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ORDERID", order.OrderId.ToString());
-                    }
-                    else if (cell.Value.ToString().Contains("CLIENTPHONE"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("CLIENTPHONE", client.ClientPhone.ToString());
-                    }
-                    else if (cell.Value.ToString().Contains("ADMDATE"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ADMDATE", order.AdmissionDate.Value.ToString("d"));
-                    }
-                    else if (cell.Value.ToString().Contains("ISSUEDATE"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ISSUEDATE", order.IssueDate.Value.ToString("d"));
-                    }
-                    else if (cell.Value.ToString().Contains("CLIENTMAIL"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("CLIENTMAIL", client.ClientEmail);
-                    }
-                    else if (cell.Value.ToString().Contains("ANIMALNAME"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ANIMALNAME", order.Animal.AnimalName);
-                    }
-                    else if (cell.Value.ToString().Contains("ANIMALGEN"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ANIMALGEN", order.Animal.AnimalGen);
-                    }
-                    else if (cell.Value.ToString().Contains("ANIMALTYPE"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ANIMALTYPE", order.Animal.AnimalBreed.AnimalType.AnimaltypeName);
-                    }
-                    else if (cell.Value.ToString().Contains("ANIMALBREED"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("ANIMALBREED", order.Animal.AnimalBreed.AnimalbreedName);
-                    }
-                    else if (cell.Value.ToString().Contains("TOTALDAYS"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("TOTALDAYS", (order.IssueDate.Value.Day - order.AdmissionDate.Value.Day).ToString());
-                    }
-                    else if (cell.Value.ToString().Contains("TOTALPRICE"))
-                    {
-                        cell.Value = cell.Value.ToString().Replace("TOTALPRICE", order.Totalprice.ToString());
+                        if (cell.Value.ToString().Contains("CLIENTNAME"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("CLIENTNAME", client.ClientName);
+                        }
+                        else if (cell.Value.ToString().Contains("ORDERID"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ORDERID", order.OrderId.ToString());
+                        }
+                        else if (cell.Value.ToString().Contains("CLIENTPHONE"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("CLIENTPHONE", client.ClientPhone.ToString());
+                        }
+                        else if (cell.Value.ToString().Contains("ADMDATE"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ADMDATE", order.AdmissionDate.Value.ToString("d"));
+                        }
+                        else if (cell.Value.ToString().Contains("ISSUEDATE"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ISSUEDATE", order.IssueDate.Value.ToString("d"));
+                        }
+                        else if (cell.Value.ToString().Contains("CLIENTMAIL"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("CLIENTMAIL", client.ClientEmail);
+                        }
+                        else if (cell.Value.ToString().Contains("ANIMALNAME"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ANIMALNAME", order.Animal.AnimalName);
+                        }
+                        else if (cell.Value.ToString().Contains("ANIMALGEN"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ANIMALGEN", order.Animal.AnimalGen);
+                        }
+                        else if (cell.Value.ToString().Contains("ANIMALTYPE"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ANIMALTYPE", order.Animal.AnimalBreed.AnimalType.AnimaltypeName);
+                        }
+                        else if (cell.Value.ToString().Contains("ANIMALBREED"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("ANIMALBREED", order.Animal.AnimalBreed.AnimalbreedName);
+                        }
+                        else if (cell.Value.ToString().Contains("TOTALDAYS"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("TOTALDAYS", (order.IssueDate.Value.Day - order.AdmissionDate.Value.Day).ToString());
+                        }
+                        else if (cell.Value.ToString().Contains("TOTALPRICE"))
+                        {
+                            cell.Value = cell.Value.ToString().Replace("TOTALPRICE", order.Totalprice.ToString());
+                        }
                     }
                 }
+                workbook.SaveAs(stream);
+                stream.Position = 0;
+                return new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
 
-            workbook.SaveAs(stream);
-            stream.Position = 0;
-            return new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            
             
         }
         [HttpGet("/orders/GenerateAgreement")]
@@ -376,6 +363,11 @@ namespace AHRestAPI.Controllers
                     doc.ReplaceText("CLIENTNAME", client.ClientName);
                     doc.ReplaceText("ORDERID", order.OrderId.ToString());
                     doc.ReplaceText("ANIMALNAME", order.Animal.AnimalName);
+                    doc.ReplaceText("ADMISSIONDATE", order.AdmissionDate.ToString());
+                    doc.ReplaceText("ISSUEDATE", order.IssueDate.ToString());
+                    doc.ReplaceText("TOTALPRICE", order.Totalprice.ToString());
+                    doc.ReplaceText("CLIENTPHONE", order.ClientPhone.ToString());
+
                     doc.SaveAs(stream);
                 }
 

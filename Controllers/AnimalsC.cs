@@ -22,26 +22,6 @@ namespace AHRestAPI.Controllers
         }
 
         [HttpGet]
-        [Route("/getCatBreeds")]
-
-        public ActionResult<Animalbreed> GetCatBreeds()
-        {
-            List<Animalbreed> catList = new List<Animalbreed>();
-            catList = DataBaseConnection.Context.Animalbreeds.ToList().Where(x => x.AnimalTypeid == 1).ToList();
-            return Ok(catList);
-        }
-
-        [HttpGet]
-        [Route("/getDogBreeds")]
-
-        public ActionResult<Animalbreed> GetDogBreeds()
-        { 
-            List<Animalbreed> dogList = new List<Animalbreed>();
-            dogList = DataBaseConnection.Context.Animalbreeds.ToList().Where(x => x.AnimalTypeid == 2).ToList();
-            return Ok(dogList);
-        }
-
-        [HttpGet]
         [Route("/getAllBreeds")]
 
         public ActionResult<Animalbreed> GetAllBreeds()

@@ -1,14 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "L6GmmWeTcTAG9+edUbb3ZnYP3QNcLRVqe6Qw1asu7M8v/fQQ8zBzAgbfdb6JF9anwTGPymxbfCGH89dKQDvZyQ==",
+  "dgSpecHash": "ZFHuWPbB7St8y+Lo72aWQ6Im+ffQ2PuTe81CRQJ13LxiDPs0UgSwnnlzPMjrqd/3hmKWHIkR8oGX9YhX/+CBMA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ItzArg\\Desktop\\ahapi\\AHRestAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ItzArg\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
-    "C:\\Users\\ItzArg\\.nuget\\packages\\closedxml\\0.102.2\\closedxml.0.102.2.nupkg.sha512",
-    "C:\\Users\\ItzArg\\.nuget\\packages\\documentformat.openxml\\3.0.2\\documentformat.openxml.3.0.2.nupkg.sha512",
-    "C:\\Users\\ItzArg\\.nuget\\packages\\documentformat.openxml.framework\\3.0.2\\documentformat.openxml.framework.3.0.2.nupkg.sha512",
+    "C:\\Users\\ItzArg\\.nuget\\packages\\closedxml\\0.102.1\\closedxml.0.102.1.nupkg.sha512",
+    "C:\\Users\\ItzArg\\.nuget\\packages\\documentformat.openxml\\2.20.0\\documentformat.openxml.2.20.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\docx\\3.0.0\\docx.3.0.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -85,7 +84,7 @@
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.io.compression.zipfile\\4.3.0\\system.io.compression.zipfile.4.3.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
-    "C:\\Users\\ItzArg\\.nuget\\packages\\system.io.packaging\\8.0.0\\system.io.packaging.8.0.0.nupkg.sha512",
+    "C:\\Users\\ItzArg\\.nuget\\packages\\system.io.packaging\\6.0.0\\system.io.packaging.6.0.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.net.http\\4.3.4\\system.net.http.4.3.4.nupkg.sha512",
@@ -126,16 +125,5 @@
     "C:\\Users\\ItzArg\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\ItzArg\\.nuget\\packages\\xlparser\\1.5.2\\xlparser.1.5.2.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Версия обнаруженного пакета нарушает ограничение зависимости: ClosedXML 0.102.2 требуется DocumentFormat.OpenXml (>= 2.16.0 && < 3.0.0), но в результате разрешения получена версия DocumentFormat.OpenXml 3.0.2.",
-      "libraryId": "DocumentFormat.OpenXml",
-      "targetGraphs": [
-        "net7.0"
-      ]
-    }
-  ]
+  "logs": []
 }
