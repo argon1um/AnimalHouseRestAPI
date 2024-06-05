@@ -27,5 +27,7 @@ public partial class Order
 
     public virtual OrderStatus? OrderStatus { get; set; }
 
+    public virtual ICollection<Orderedservice> Orderedservices { get; set; } = new List<Orderedservice>();
+
     public virtual Room? Room { get; set; }
 }

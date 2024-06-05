@@ -1,5 +1,4 @@
-﻿using AnimalHouseRestAPI.Models;
-using AnimalHouseRestAPI.ModelsDTO;
+﻿using AnimalHouseRestAPI.ModelsDTO;
 using System.Collections.Generic;
 
 namespace AHRestAPI.ModelsDTO

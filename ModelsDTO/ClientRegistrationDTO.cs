@@ -1,6 +1,4 @@
-﻿using AnimalHouseRestAPI.Models;
-
-namespace AnimalHouseRestAPI.ModelsDTO
+﻿namespace AnimalHouseRestAPI.ModelsDTO
 {
     public class ClientResponseLogin
     {

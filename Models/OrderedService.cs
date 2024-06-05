@@ -1,18 +1,21 @@
-﻿using AHRestAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace AnimalHouseRestAPI.Models;
+namespace AHRestAPI.Models;
 
-public partial class OrderedService
+public partial class Orderedservice
 {
-    public int OrderedserviceId { get; set; }
+    public int NoteId { get; set; }
 
-    public DateOnly? OrderedserviceDate { get; set; }
+    public int OrderId { get; set; }
 
-    public int ServiceId { get; set; }
+    public sbyte Booking { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public sbyte Bookingplus { get; set; }
 
-    public virtual Service Service { get; set; } = null!;
+    public sbyte Medicine { get; set; }
+
+    public sbyte Photosession { get; set; }
+
+    public virtual Order Order { get; set; } = null!;
 }

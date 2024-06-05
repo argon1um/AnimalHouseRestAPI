@@ -2,7 +2,6 @@
 using AHRestAPI.Models;
 using AHRestAPI.ModelsDTO;
 using AnimalHouseRestAPI.DataBase;
-using AnimalHouseRestAPI.Models;
 using AnimalHouseRestAPI.ModelsDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -59,8 +58,8 @@ namespace AHRestAPI.Controllers
                     {
                         Client client = DataBaseConnection.Context.Clients.FirstOrDefault(x => x.ClientPassword == userAuthDTO.Password && x.ClientPhone == phone);
                         {
-                            ;
-                            return Ok(ClientRegistartionMapper.ClientConverter(client));
+                            if (client != null) return Ok(ClientRegistartionMapper.ClientConverter(client));
+                            else return BadRequest();
                         }
                     }
                 }

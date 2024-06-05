@@ -9,7 +9,5 @@ public partial class Roomtype
 
     public string? RoomtypeName { get; set; }
 
-    public string? RoomtypeDescription { get; set; }
-
     public virtual ICollection<Room> Rooms { get; set; } = new List<Room>();
 }

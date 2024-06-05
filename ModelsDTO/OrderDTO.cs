@@ -1,5 +1,4 @@
-﻿using AnimalHouseRestAPI.Models;
-
+﻿
 namespace AnimalHouseRestAPI.ModelsDTO
 {
     public class OrderDTO

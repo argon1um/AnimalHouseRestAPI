@@ -1,7 +1,6 @@
 ﻿using AHRestAPI.Mappers;
 using AHRestAPI.Models;
 using AnimalHouseRestAPI.DataBase;
-using AnimalHouseRestAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

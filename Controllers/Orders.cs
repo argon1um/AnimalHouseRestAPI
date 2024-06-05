@@ -2,7 +2,6 @@
 using AHRestAPI.Models;
 using AHRestAPI.ModelsDTO;
 using AnimalHouseRestAPI.DataBase;
-using AnimalHouseRestAPI.Models;
 using AnimalHouseRestAPI.ModelsDTO;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Packaging;
@@ -13,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography.X509Certificates;
 using Xceed.Words.NET;
 
@@ -113,14 +113,14 @@ namespace AHRestAPI.Controllers
         }
 
 
-        [HttpPut]
-        [Route("/orders/statuschange/{orderid}/")]
-        public ActionResult<Order> OrderStatusChange(int orderid)
+        [HttpPost]
+        [Route("/orders/statuschange")]
+        public ActionResult<Order> OrderStatusChange([FromQuery] int orderid)
         {
             Order order = DataBaseConnection.Context.Orders.ToList().FirstOrDefault(x => x.OrderId == orderid);
             if (order != null)
             {
-                order.OrderStatusid = 2;
+                order.OrderStatusid = 3;
                 DataBaseConnection.Context.SaveChanges();
                 return Content("Статус изменён");
             }
@@ -207,7 +207,7 @@ namespace AHRestAPI.Controllers
                 return BadRequest();
             }
 
-            Client client = DataBaseConnection.Context.Clients.ToList().FirstOrDefault(x => x.ClientPhone == orderdto.clientPhone);
+            Client client = DataBaseConnection.Context.Clients.ToList().FirstOrDefault(x => x.ClientPhone == orderdto.clientPhone && x.ClientPassword != null);
             if (orderdto.admDate > orderdto.issueDate)
             {
                 return BadRequest("wrong dates");
@@ -240,13 +240,15 @@ namespace AHRestAPI.Controllers
                     {
                         ClientId = DataBaseConnection.Context.Clients.ToList().Max(x => x.ClientId) + 1,
                         ClientPhone = orderdto.clientPhone,
+                        ClientEmail = orderdto.clientEmail,
                         ClientCountoforders = 1,
                         ClientName = orderdto.clientName
                     };
                     DataBaseConnection.Context.Clients.Add(client1);
                     orderDTO.ClientPhone = orderdto.clientPhone;
+                    orderDTO.OrderId = DataBaseConnection.Context.Orders.Max(x => x.OrderId) + 1;
                     AnimalCheck(client1.ClientPhone);
-                    orderDTO.OrderStatusId = 1;
+                    orderDTO.OrderStatusId = 2;
                     orderDTO.Totalprice = orderdto.Totalprice;
                     orderDTO.AdmissionDate = orderdto.admDate;
                     orderDTO.IssueDate = orderdto.issueDate;
@@ -257,6 +259,25 @@ namespace AHRestAPI.Controllers
                     DataBaseConnection.Context.Orders.Add(OrdergetMapper.ConvertToOrder(orderDTO));
                     DataBaseConnection.Context.Rooms.Update(selroom);
                     DataBaseConnection.Context.SaveChanges();
+                    MailAddress from = new MailAddress("chunowalow@gmail.com", "AnimalHouse");
+                    // кому отправляем
+                    MailAddress to = new MailAddress($"{orderdto.clientEmail}");
+                    // создаем объект сообщения
+                    MailMessage m = new MailMessage(from, to);
+                    // тема письма
+                    m.Subject = $"Заявка на проживание #{orderDTO.OrderId}";
+                    // текст письма
+                    m.Body = $"<a href=\"http://localhost:8081/orders/GenerateDoc?id={orderDTO.OrderNoteId}\">Скачать Квитанцию<a/>" +
+                        $"<br/>" +
+                        $"<a href=\"http://localhost:8081/orders/GenerateAgreement?id={orderDTO.OrderNoteId}\">Скачать договор<a/>";
+                    // письмо представляет код html
+                    m.IsBodyHtml = true;
+                    // адрес smtp-сервера и порт, с которого будем отправлять письмо
+                    SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+                    // логин и пароль
+                    smtp.Credentials = new NetworkCredential("chunowalow@gmail.com", "xpdr zpdd sdwj smnd");
+                    smtp.EnableSsl = true;
+                    smtp.Send(m);
                     return Ok();
                 }
             }
@@ -328,6 +349,10 @@ namespace AHRestAPI.Controllers
                         {
                             cell.Value = cell.Value.ToString().Replace("TOTALPRICE", order.Totalprice.ToString());
                         }
+                        else if (cell.Value.ToString().Contains("ROOMNUMBER"))
+                        {
+                            cell.Value.ToString().Replace("ROOMNUMBER", order.RoomId.ToString());
+                        }
                     }
                 }
                 workbook.SaveAs(stream);
@@ -372,8 +397,6 @@ namespace AHRestAPI.Controllers
                 }
 
                 stream.Position = 0;
-                order.OrderStatusid = 2;
-                DataBaseConnection.Context.SaveChanges();
                 return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "agreement.docx");
             }
         }

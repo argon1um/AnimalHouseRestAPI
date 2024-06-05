@@ -27,6 +27,8 @@ public partial class Ah4cContext : DbContext
 
     public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
 
+    public virtual DbSet<Orderedservice> Orderedservices { get; set; }
+
     public virtual DbSet<Room> Rooms { get; set; }
 
     public virtual DbSet<Roomstatus> Roomstatuses { get; set; }
@@ -167,7 +169,9 @@ public partial class Ah4cContext : DbContext
             entity.Property(e => e.OrderId).HasColumnName("order_id");
             entity.Property(e => e.OrderStatusid).HasColumnName("order_statusid");
             entity.Property(e => e.RoomId).HasColumnName("room_id");
-            entity.Property(e => e.Totalprice).HasColumnName("totalprice");
+            entity.Property(e => e.Totalprice)
+                .HasPrecision(11, 2)
+                .HasColumnName("totalprice");
 
             entity.HasOne(d => d.Animal).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.AnimalId)
@@ -194,6 +198,29 @@ public partial class Ah4cContext : DbContext
             entity.Property(e => e.OrderstatusName)
                 .HasMaxLength(45)
                 .HasColumnName("orderstatus_name");
+        });
+
+        modelBuilder.Entity<Orderedservice>(entity =>
+        {
+            entity.HasKey(e => e.NoteId).HasName("PRIMARY");
+
+            entity.ToTable("orderedservices");
+
+            entity.HasIndex(e => e.OrderId, "order_id_idx");
+
+            entity.Property(e => e.NoteId)
+                .ValueGeneratedNever()
+                .HasColumnName("note_id");
+            entity.Property(e => e.Booking).HasColumnName("booking");
+            entity.Property(e => e.Bookingplus).HasColumnName("bookingplus");
+            entity.Property(e => e.Medicine).HasColumnName("medicine");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.Photosession).HasColumnName("photosession");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Orderedservices)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("order_id");
         });
 
         modelBuilder.Entity<Room>(entity =>
@@ -251,9 +278,6 @@ public partial class Ah4cContext : DbContext
             entity.Property(e => e.RoomtypeId)
                 .ValueGeneratedNever()
                 .HasColumnName("roomtype_id");
-            entity.Property(e => e.RoomtypeDescription)
-                .HasMaxLength(200)
-                .HasColumnName("roomtype_description");
             entity.Property(e => e.RoomtypeName)
                 .HasMaxLength(45)
                 .HasColumnName("roomtype_name");
